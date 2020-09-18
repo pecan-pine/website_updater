@@ -9,28 +9,13 @@ def hello_world():
         print("Post!")
         user_agent = request.headers["User-Agent"]
         if "GitHub-Hookshot" in user_agent.split("/"):
-            message = request.json
-            ref = message["ref"]
-            branch = ref.split("/")[-1]
-            name = message["repository"]["name"]
-            prev_commit = message["before"]
-            current_commit = message["after"]
-            compare_url = message["compare"]
-            
-            # expand_json(message) 
-            print(name)
-            print(branch)
-            print(prev_commit)
-            print(current_commit)
-            print(compare_url)
-        else:
-            file_test()
-            print("The button was pressed")
-            return redirect("/")
+            commit_message = write_commit_message(request)
+            print(commit_message)
+            update_website(commit_message)
         return Response(status=200)
-    return """Hello, there! Press this button: <form action="/" method="POST"><input type="submit" value="Button"></form>"""
+    return "Hello, there!"
 
-def file_test():
+def update_website(commit_message):
     resume_dir = '../resume'
     input_dir = resume_dir + '/generated_resumes/website'
     website_dir = '../pecan-pine.github.io'
@@ -46,9 +31,29 @@ def file_test():
     for f in input_files:
         print(f'Copying file {f}...')
         os.system(f'cp { input_dir }/{f} {output_dir}/{f}')
-    
-    
 
+    print(os.system(f'cd { website_dir }; git add .; git commit -m { commit_message }; git push;'))
+    print("Website git repository updated")
+       
+    
+def write_commit_message(request):
+    message = request.json
+    ref = message["ref"]
+    branch = ref.split("/")[-1]
+    name = message["repository"]["name"]
+    prev_commit = message["before"]
+    current_commit = message["after"]
+    compare_url = message["compare"]
+    prev_commit_message = message["head_commit"]["message"]
+    
+    # expand_json(message) 
+    commit_message_output = f"Updated resume-related files in website in \
+response to commit # { current_commit } in \
+pecan-pine/resume repository. The message for this commit \
+was: '{ prev_commit_message }'. The previous commit was \
+# { prev_commit }. Compare the changes here: { compare_url }."
+
+    return commit_message_output
 
 
 # expand a json message to better read what is included
