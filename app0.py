@@ -20,19 +20,26 @@ def update_website(commit_message):
     input_dir = resume_dir + '/generated_resumes/website'
     website_dir = '../pecan-pine.github.io'
     output_dir = website_dir + '/shared'
+    pdf_file = resume_dir + '/generated_resumes/programming/resume.pdf'    
 
     input_files = os.listdir(input_dir)
     print(input_files)
     print(os.listdir(output_dir))
 
-    print(os.system(f'cd { resume_dir }; git pull origin web_version;'))
+    print(os.system(f'cd { resume_dir }; git pull;'))
     print(os.system(f'cd { website_dir }; git pull;'))
 
     for f in input_files:
         print(f'Copying file {f}...')
         os.system(f'cp { input_dir }/{f} {output_dir}/{f}')
 
-    print(os.system(f'cd { website_dir }; git add .; git commit -m { commit_message }; git push;'))
+    print(f'Copying resume pdf to main site')
+    os.system(f'cp { pdf_file } { website_dir }/static/resume.pdf')
+
+    print(f'Copying resume pdf to commandLine site')
+    os.system(f'cp { pdf_file } { website_dir }/commandLineSite/static/resume.pdf')
+
+    print(os.system(f'cd { website_dir }; git add .; git commit -m "{ commit_message }"; git push;'))
     print("Website git repository updated")
        
     
