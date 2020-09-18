@@ -22,12 +22,13 @@ def update_website(commit_message):
     output_dir = website_dir + '/shared'
     pdf_file = resume_dir + '/generated_resumes/programming/resume.pdf'    
 
+    print(os.system(f'cd { resume_dir }; git pull;'))
+    print(os.system(f'cd { website_dir }; git pull;'))
+
     input_files = os.listdir(input_dir)
     print(input_files)
     print(os.listdir(output_dir))
 
-    print(os.system(f'cd { resume_dir }; git pull;'))
-    print(os.system(f'cd { website_dir }; git pull;'))
 
     for f in input_files:
         print(f'Copying file {f}...')
