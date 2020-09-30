@@ -25,6 +25,12 @@ echo -e "\033[0;32mpulling local changes into resume...\033[0m"
 cd "$resume_dir"
 git pull
 
+if [ $? == 1 ]
+then 
+    echo "Problem pulling local changes into resume...aborting"
+    exit 1
+fi
+
 echo -e "\033[0;32mreading commit message...\033[0m"
 # get commit hash and previous commit hash
 commit="$(git log --format=%h -n 1)"
@@ -56,7 +62,7 @@ echo "Website updater running now..."
 # if any differences are found, dcmp-auto copies all 
 # files from input_dir to output_dir
 echo "Comparing source files in $input_dir to those in $output_dir"
-dcmp-auto "$input_dir" "$output_dir"
+~/.local/bin/dcmp-auto "$input_dir" "$output_dir"
 
 # dcmp-auto will output 0 if no changes, or
 # will output 3 if there are changes
