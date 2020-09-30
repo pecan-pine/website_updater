@@ -3,8 +3,6 @@
 # bash script to update website files if changed
 # script dcmp-auto must be installed for this to work
 
-# TODO: get a more descriptive automated commit message
-
 # define folders
 resume_dir=~/resume
 
@@ -27,6 +25,26 @@ echo -e "\033[0;32mpulling local changes into resume...\033[0m"
 cd "$resume_dir"
 git pull
 
+echo -e "\033[0;32mreading commit message...\033[0m"
+# get commit hash and previous commit hash
+commit="$(git log --format=%h -n 1)"
+prev_commit="$(git log --format=%p -n 1)"
+commiter_name="$(git log --format=%cn -n 1)"
+commiter_email="$(git log --format=%ce -n 1)"
+commit_date="$(git log --date=format:%c --format=%ad -n 1)"
+commit_message="$(git log --format=%B -n 1)"
+
+# create new commit message
+message="Updated resume-related files in website in response to commit #$commit in pecan-pine/resume repository at $commit_date by $commiter_name ($commiter_email). 
+
+The message for this commit was: 
+'$commit_message'
+
+Compare changes made here: https://github.com/pecan-pine/resume/compare/$prev_commit...$commit
+
+This message was automatically generated."
+
+# pull changes into website repository
 echo -e "\033[0;32mpulling GitHub changes into website...\033[0m"
 cd "$website_dir"
 git pull
@@ -55,8 +73,7 @@ then
     echo "Pushing website to GitHub..."
     cd "$website_dir"
     git add .
-    # TODO: make this more specific
-    git commit -m "Updated website files in response to resume update"
+    git commit -m "$message"
     # the -u may not be necessary below
     git push -u origin master
 
