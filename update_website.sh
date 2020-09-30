@@ -14,9 +14,9 @@ output_dir="$website_dir"/shared
 
 pdf_file="$resume_files_dir"/programming/resume.pdf
 
-echo "$input_dir"
-echo "$output_dir"
-echo "$pdf_file"
+# echo "$input_dir"
+# echo "$output_dir"
+# echo "$pdf_file"
 
 # pull changes into repositories
 echo "Website pre-update running now..."
@@ -42,9 +42,12 @@ commit_message="$(git log --format=%B -n 1)"
 
 # create new commit message
 message="Updated resume-related files in website in response to commit #$commit in pecan-pine/resume repository at $commit_date by $commiter_name ($commiter_email). 
+
 The message for this commit was: 
 '$commit_message'
-Compare changes made here: https://github.com/pecan-pine/resume/compare/$prev_commit...$commit
+
+Compare changes made here: 'https://github.com/pecan-pine/resume/compare/$prev_commit...$commit'
+
 This message was automatically generated."
 
 # pull changes into website repository
