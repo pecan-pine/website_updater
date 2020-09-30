@@ -1,0 +1,6 @@
+Here is a (possibly not complete) list of requirements for this project:
+
+- git (of course)
+- hub (for automatic pull request)
+- dcmp-auto (for copying files --get this from https://github.com/pecan-pine/linux-scripts)
+
