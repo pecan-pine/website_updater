@@ -42,12 +42,9 @@ commit_message="$(git log --format=%B -n 1)"
 
 # create new commit message
 message="Updated resume-related files in website in response to commit #$commit in pecan-pine/resume repository at $commit_date by $commiter_name ($commiter_email). 
-
 The message for this commit was: 
 '$commit_message'
-
 Compare changes made here: https://github.com/pecan-pine/resume/compare/$prev_commit...$commit
-
 This message was automatically generated."
 
 # pull changes into website repository
