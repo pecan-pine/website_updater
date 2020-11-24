@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# An example hook script to prepare a packed repository for use over
+# dumb transports.
+#
+# To enable this hook, rename this file to "post-update".
+unset GIT_DIR
+
+echo "post-update script starting up..."
+
+echo "running script to move files..."
+
+/home/git/scripts/update_website.sh
+
+echo "done"
+
