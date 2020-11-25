@@ -73,6 +73,9 @@ then
     echo "Copying resume pdf to main site..."
     cp "$pdf_file" "$website_dir"/static/resume.pdf
 
+    echo "Copying resume pdf to orbit site..."
+    cp "$pdf_file" "$website_dir"/orbitSite/static/resume.pdf
+
     echo "Copying resume pdf to commandLine site..."
     cp "$pdf_file" "$website_dir"/commandLineSite/static/resume.pdf
 
